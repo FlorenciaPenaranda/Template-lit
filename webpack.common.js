@@ -6,6 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const webpack = require("webpack");
 const WebpackPwaManifest = require("webpack-pwa-manifest");
 const path = require("path");
+const pjson = require("./package.json");
 
 module.exports = {
     optimization: {
@@ -25,8 +26,8 @@ module.exports = {
             favicon: "./assets/icons/favicon.ico",
         }),
         new WebpackPwaManifest({
-            name: "template",
-            short_name: "template",
+            name: "controlingresos",
+            short_name: "controlingresos",
             description: "",
             start_url: "./index.html",
             background_color: "#ffffff",
@@ -48,9 +49,9 @@ module.exports = {
         }),
 
         new webpack.DefinePlugin({
-            __VERSION__: JSON.stringify(process.env.npm_package_version),
-            __DESCRIPTION__: JSON.stringify(process.env.npm_package_description),
-            __ORGANIZACION__: JSON.stringify("la organización"),
+            __VERSION__: JSON.stringify(pjson.version),
+            __DESCRIPTION__: JSON.stringify(pjson.description),
+            __ORGANIZACION__: JSON.stringify("OsPeCon"),
         }),
     ],
     module: {

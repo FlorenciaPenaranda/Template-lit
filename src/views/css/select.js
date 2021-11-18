@@ -7,9 +7,9 @@ export const select = css`
         outline: 0;
         box-shadow: none;
         border: none;
-        border: 1px solid var(--color-gris-claro);
+        border: 1px solid var(--ligth-border-color);
         background-image: none;
-        background-color: var(--color-blanco);
+        background-color: var(--white-application-color);
     }
 
     select::-ms-expand {
@@ -28,22 +28,22 @@ export const select = css`
         width: 100%;
         padding: 0.5rem;
         height: 2.5rem;
-        color: var(--color-azul-oscuro);
+        color: var(--primary-color);
         cursor: pointer;
         font-size: var(--font-bajada-size);
         font-weight: var(--font-bajada-weight);
         border-radius: 5px;
     }
     .select[dark] select {
-        color: var(--color-blanco);
-        background-color: var(--color-azul-oscuro);
+        color: var(--white-application-color);
+        background-color: var(--primary-color);
     }
     .select[dark] select option {
-        color: var(--color-blanco);
-        background-color: var(--color-azul-oscuro);
+        color: var(--white-application-color);
+        background-color: var(--primary-color);
     }
     option {
-        color: var(--color-azul-oscuro);
+        color: var(--primary-color);
         padding: 0rem;
         font-size: var(--font-bajada-size);
         font-weight: var(--font-bajada-weight);
@@ -57,9 +57,9 @@ export const select = css`
     .select label {
         font-size: var(--font-label-size);
         font-weight: var(--font-label-weight);
-        color: var(--color-azul-oscuro);
+        color: var(--primary-color);
     }
     .select[dark] label {
-        color: var(--color-blanco);
+        color: var(--primary-color);
     }
 `;

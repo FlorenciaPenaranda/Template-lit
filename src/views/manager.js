@@ -5,13 +5,13 @@ import { connect } from "@brunomon/helpers";
 import { store } from "../redux/store";
 import { layoutsCSS } from "../views/ui/layouts";
 import { getLayout } from "../redux/screens/screenLayouts";
-
 import { SpinnerLoading } from "./componentes/spinner";
 
 import { goTo } from "../redux/routing/actions";
 
-import { formDiabetes } from "./componentes/formDiabetes";
 import { menuPrincipal } from "./headers/menu";
+import { registroIngreso } from "./componentes/registroIngreso";
+import { controlIngreso } from "./componentes/controlIngreso";
 
 const MEDIA_CHANGE = "ui.media.timeStamp";
 const SCREEN = "screen.timeStamp";
@@ -35,6 +35,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE, SCREEN, SELECTION)
                 position: absolute;
                 top: 0;
                 display: grid;
+
                 height: 100vh;
                 width: 100vw;
                 padding: 0;
@@ -61,7 +62,8 @@ export class viewManager extends connect(store, MEDIA_CHANGE, SCREEN, SELECTION)
     render() {
         return html`
             <menu-principal></menu-principal>
-            <form-diabetes></form-diabetes>
+            <registro-ingreso></registro-ingreso>
+            <control-ingreso></control-ingreso>
         `;
     }
 

@@ -6,6 +6,7 @@
 import { html, LitElement } from "lit";
 import { store } from "../../redux/store";
 import { connect } from "@brunomon/helpers/connect";
+
 export class SpinnerLoading extends connect(store, "api.loading")(LitElement) {
     constructor() {
         super();

@@ -143,10 +143,8 @@ export class menuPrincipal extends connect(store, MEDIA_CHANGE, SCREEN, USUARIO)
 
             <div id="opciones" class="grid column" @click=${this.toggleMenu}>
                 <div class="menu-button">${RIGHT}</div>
-                <div class="menuItem seleccionado" @click=${this.click} .option=${"opcion 0"}>Opcion 0</div>
-                <div class="menuItem" @click=${this.click} .option=${"opcion1"}>Opcion 1</div>
-                <div class="menuItem" @click=${this.click} .option=${"opcion2"}>Opcion 2</div>
-                <div class="menuItem" @click=${this.click} .option=${"opcion3"}>Opcion 3</div>
+                <div class="menuItem seleccionado" @click=${this.click} .option=${"registroIngreso"}>Registrar ingreso</div>
+                <div class="menuItem" @click=${this.click} .option=${"controlIngreso"}>Control ingreso</div>
             </div>
         `;
     }
@@ -172,7 +170,7 @@ export class menuPrincipal extends connect(store, MEDIA_CHANGE, SCREEN, USUARIO)
     }
     toggleMenu() {
         this.visible = !this.visible;
-        this.opciones.style.right = this.visible ? "0" : "-100%";
+        /*this.opciones.style.right = this.visible ? "0" : "-100%";*/
         this.update();
     }
 

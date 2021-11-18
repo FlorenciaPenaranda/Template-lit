@@ -13,25 +13,25 @@ export const input = css`
         width: 100%;
         padding: 0.5rem;
         height: 2.5rem;
-        background-color: var(--color-blanco);
-        border: 1px solid var(--color-gris-claro);
-        color: var(--color-azul-oscuro);
-        font-size: var(--font-bajada-size);
+        background-color: var(--white-application-color);
+        border: 1px solid var(--ligth-border-color);
+        color: var(--primary-color);
+        /*font-size: var(--font-bajada-size);*/
         font-weight: var(--font-bajada-weight);
         outline: none;
         border-radius: 5px;
         font-family: inherit;
     }
     .input.error input {
-        border: 1px solid var(--color-rojo);
+        border: 1px solid var(--error-color);
     }
     .input label {
-        color: var(--color-azul-oscuro);
+        color: var(--primary-color);
         font-size: var(--font-label-size);
         font-weight: var(--font-label-weight);
     }
     .input label[error] {
-        color: var(--color-rojo);
+        color: var(--error-color);
         font-size: var(--font-error-size);
         font-weight: var(--font-error-weight);
     }
