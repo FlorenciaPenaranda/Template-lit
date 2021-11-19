@@ -51,7 +51,8 @@ export const add =
     (action) => {
         next(action);
         if (action.type === ADD) {
-            dispatch(apiAdd(documentacionFetch, action.item, ADD_SUCCESS, ADD_ERROR));
+            
+            //dispatch(apiAdd(/*documentacionFetch*/, action.item, ADD_SUCCESS, ADD_ERROR));
         }
     };
 
@@ -66,8 +67,8 @@ export const agregarImagen =
             const key = "pId=" + action.id + ",pNombre='" + action.nombre + "'";
             const body = action.imagen;
             const accion = "";
-            dispatch(apiAction(agregarImagenFetch, body, key, accion, AGREGAR_IMAGEN_SUCCESS, ADD_ERROR));
+            dispatch(apiAction(/*agregarImagenFetch*/, body, key, accion, AGREGAR_IMAGEN_SUCCESS, ADD_ERROR));
         }
     };
 
-export const middleware = [updateItem, get, processGet, processError, processDelete, updateField, remove, add, processUpdateField, agregarImagen];
+export const middleware = [ get, processGet, processError, add, agregarImagen];

@@ -14,6 +14,8 @@ import { viewManager } from "./views/manager";
 import { login } from "./redux/autorizacion/actions";
 import { register as registerSW, activate as activateSW } from "./libs/serviceWorker";
 
+import { add } from "./redux/registroIngresos/actions";
+
 if (process.env.NODE_ENV === "production") {
     registerSW();
     activateSW();

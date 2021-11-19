@@ -3,7 +3,7 @@ import { store } from "../../redux/store";
 import { connect } from "@brunomon/helpers";
 
 import { isInLayout } from "../../redux/screens/screenLayouts";
-
+import { CAMERA } from "../../../assets/icons/svgs";
 import { gridLayout } from "../css/gridLayout";
 import { input } from "../css/input";
 import { select } from "../css/select";
@@ -11,6 +11,10 @@ import { button } from "../css/button";
 
 const MEDIA_CHANGE = "ui.media.timeStamp";
 const SCREEN = "screen.timeStamp";
+const constraints = (window.constraints = {
+    audio: false,
+    video: true,
+});
 
 export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitElement) {
     constructor() {
@@ -21,6 +25,31 @@ export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitEle
         this.timeOut = null;
         this.shift = false;
         this.documento = this.documentoDefault();
+    }
+
+    static get properties() {
+        return {
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: "media-size",
+            },
+            orientation: {
+                type: String,
+                reflect: true,
+            },
+            item: {
+                type: Object,
+                state: true,
+            },
+            hidden: {
+                type: Boolean,
+                reflect: true,
+            },
+            documento: {
+                type: Object,
+            },
+        };
     }
 
     documentoDefault() {
@@ -82,6 +111,29 @@ export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitEle
                 font-size: var(--font-label-size);
                 font-weight: bold;
             }
+            video {
+                background: #222;
+                height: 30vh;
+            }
+            /*button {
+                height: 5rem;
+                width: 5rem;
+                border-radius: 5rem;
+            }*/
+            .BtnCaptura {
+                align-items: end;
+                cursor: pointer;
+                border-radius: 1rem;
+                height: 3rem;
+                width: 3rem;
+
+                color: var(--light-application-color);
+                fill: var(--light-application-color);
+                stroke: var(--secondary-color: );
+                background-color: var(--primary-color);
+                font-size: var(--font-bajada-size);
+                font-weight: var(--font-bajada-weight);
+            }
         `;
     }
 
@@ -110,7 +162,10 @@ export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitEle
                         </div>
                     </div>
                     <div class="photo">
-                        <div>FOTO</div>
+                        <video id="video" autoplay="" playsinline=""></video>
+                        <button class="BtnCaptura" @click=${this.capturarImagen}>${CAMERA}</button>
+                        <canvas id="canvas" hidden></canvas>
+                        <img id="imagen" hidden />
                     </div>
                 </div>
 
@@ -157,6 +212,7 @@ export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitEle
     firstUpdated(changedProperties) {
         this.setAttribute("tabindex", "0");
         this.addEventListener("keyup", this.lector);
+        this.init();
     }
 
     lector(e) {
@@ -209,29 +265,52 @@ export class registroIngreso extends connect(store, MEDIA_CHANGE, SCREEN)(LitEle
         //alert(JSON.stringify(documento));
     }
 
-    static get properties() {
-        return {
-            mediaSize: {
-                type: String,
-                reflect: true,
-                attribute: "media-size",
-            },
-            orientation: {
-                type: String,
-                reflect: true,
-            },
-            item: {
-                type: Object,
-                state: true,
-            },
-            hidden: {
-                type: Boolean,
-                reflect: true,
-            },
-            documento: {
-                type: Object,
-            },
-        };
+    handleSuccess(stream) {
+        const video = this.shadowRoot.querySelector("video");
+        const videoTracks = stream.getVideoTracks();
+        //console.log("Got stream with constraints:", constraints);
+        //console.log(`Using video device: ${videoTracks[0].label}`);
+        window.stream = stream; // make variable available to browser console
+        video.srcObject = stream;
+    }
+
+    handleError(error) {
+        if (error.name === "OverconstrainedError") {
+            const v = constraints.video;
+            errorMsg(`The resolution ${v.width.exact}x${v.height.exact} px is not supported by your device.`);
+        } else if (error.name === "NotAllowedError") {
+            errorMsg("Permissions have not been granted to use your camera and " + "microphone, you need to allow the page access to your devices in " + "order for the demo to work.");
+        }
+        errorMsg(`getUserMedia error: ${error.name}`, error);
+    }
+
+    errorMsg(msg, error) {
+        const errorElement = this.shadowRoot.querySelector("#errorMsg");
+        errorElement.innerHTML += `<p>${msg}</p>`;
+        if (typeof error !== "undefined") {
+            console.error(error);
+        }
+    }
+
+    async init(e) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            this.handleSuccess(stream);
+            e.target.disabled = true;
+        } catch (e) {
+            this.handleError(e);
+        }
+    }
+
+    capturarImagen(e) {
+        const canvas = this.shadowRoot.querySelector("#canvas");
+        const video = this.shadowRoot.querySelector("#video");
+        const imagen = this.shadowRoot.querySelector("#imagen");
+        canvas.width = 200;
+        canvas.height = 200;
+        canvas.getContext("2d").drawImage(video, 0, 0, 200, 200);
+        var data = canvas.toDataURL("image/png");
+        imagen.setAttribute("src", data);
     }
 }
 window.customElements.define("registro-ingreso", registroIngreso);
